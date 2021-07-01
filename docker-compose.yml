@@ -1,0 +1,39 @@
+version: "3.1"
+services:
+  app:
+    build:
+      context: ./services/php
+    volumes:
+      - ${HOME}/.ssh:/home/www-data/.ssh
+      - ./src:/var/www
+      - ./services/php/php.ini:/usr/local/etc/php/conf.d/40-custom.ini
+    links:
+      - postgres
+      - memcached
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+  webserver:
+    image: nginx:alpine
+    ports:
+      - ${HTTP_PORT}:80
+    volumes:
+      - ./src:/var/www
+      - ./services/nginx:/etc/nginx/conf.d
+    links:
+      - app
+  postgres:
+    image: ${IMAGE}
+    environment:
+      POSTGRES_DB: ${PS_DATABASE}
+      POSTGRES_USER: ${PS_USER}
+      POSTGRES_PASSWORD: ${PS_PASSWORD}
+    ports:
+      - 5432:5432
+    volumes:
+      - ./services/pgsql/data:/var/lib/postgresql/data
+  memcached:
+    image: memcached:1.4-alpine
+    ports:
+      - 11211:11211
+      
