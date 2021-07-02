@@ -36,4 +36,4 @@ services:
     image: memcached:1.4-alpine
     ports:
       - 11211:11211
-      
+      #6379:6379 - port Redis

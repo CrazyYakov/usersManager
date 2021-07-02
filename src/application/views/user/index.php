@@ -34,7 +34,7 @@ $this->page = 'Пользователи';
                 <td><?= $person['birthday'] ?></td>
                 <td><?= $person['created_at'] ?></td>
                 <td>
-                    <a href="/user/view/?action=form&id=<?= $person['id'] ?>" class=" btn btn-info">обзор</a>
+                    <a href="/user/view/?action=form&id=<?= $person['id'] ?>" class=" btn btn-info">Обзор</a>
                     <a href="/user/update/?action=form&id=<?= $person['id'] ?>" class=" btn btn-info">Изменить</a>
                     <a href="/user/delete/?action=form&id=<?= $person['id'] ?>" class=" btn btn-info">Удалить</a>
                 </td>

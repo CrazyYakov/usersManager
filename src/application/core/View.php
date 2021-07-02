@@ -6,11 +6,11 @@ class View
 {
     public static string $template_view = "template.php";
 
-    public string $page = "document";
+    public string $page = "Document";
 
     function generate($content_view, $data = null)
     {
-        if (Route::start()->getUrl() != "{$content_view}") {
+        if ((Route::start()->getUrl() != "{$content_view}" ) && $content_view != 'main') {
 
             if (!empty($data)) {
                 $methodGet = "?";

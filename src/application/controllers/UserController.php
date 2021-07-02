@@ -54,6 +54,7 @@ class UserController extends Controller
     {
         $user = new User();
         if ($_POST['submit'] && $user->update($_POST, $_GET['id'])) {
+
             $this->view->generate('user/view', [
                 'id' => $user->id,
             ]);

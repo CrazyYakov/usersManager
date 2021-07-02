@@ -55,6 +55,7 @@ class User extends Model
         FROM USERS
         LEFT JOIN DEPARTMENTS as dep on dep.id = USERS.department_id
         LEFT JOIN JOBS        as job on job.id = USERS.job_id
+        ORDER BY users.id
         EOT;
         return $this->select($query);
     }

@@ -4,14 +4,17 @@
 namespace controllers;
 
 use core\Controller;
+use models\Job;
+
 
 class JobController extends Controller
 {
     public function actionIndex()
     {
-        $user = new Job();
-        $data = $user->get();
+        $job = new Job();
 
-        $this->view->generate('users/index', $data);
+        $this->view->generate('job/index', [
+            'job' => $job->get(),
+        ]);
     }
 }

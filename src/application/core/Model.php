@@ -99,13 +99,15 @@ class Model extends DataBase
         $valuesUpdate = preg_replace('/, $/', '', $valuesUpdate);
 
         $query = "UPDATE {$this->tableName} SET {$valuesUpdate} WHERE id = $id";
-
+        var_dump($query);
         $stmt = $this->db->prepare($query);
 
         foreach ($this->fields as $field) {
             $stmt->bindValue(":$field", $dataPost[$field]);
         }
         if ($stmt->execute()) {
+
+            $this->id = $_GET['id'];
             return true;
         } else {
             return false;

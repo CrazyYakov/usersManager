@@ -11,8 +11,10 @@ class DepartmentController extends Controller
     function actionIndex()
     {
         $department = new Department();
-        $data = $department->get();
-        $this->view->generate('departments/index', $data);
+        
+        $this->view->generate('department/index', [
+            'department' => $department->get(),
+        ]);
     }
 
     function actionCreate()

@@ -6,11 +6,10 @@ $this->page = 'Создание пользователя';
  * @var $jobs
  * @var $user
  */
-var_dump($user[0]);
 ?>
 
 <div class="container">
-    <form action="create" method="post" class="w-25 mt-5">
+    <form action="/user/update?id=<?=$_GET['id']?>" method="post" class="w-25 mt-5">
 
         <input type="text" name="name" class="form-floating" value="<?= $user[0]['name']?>">
         <label for="exampleFormControlInput1" class="form-label" >Введите имя </label>
@@ -58,11 +57,11 @@ var_dump($user[0]);
         <label for="exampleFormControlInput1" class="form-label ">Введите зарплату </label>
         <br>
         <label for="birthday">День Рождения:</label>
-        <input type="date" name="birthday" class="form-floating"  value="<?= date()$user[0]['salary']?>">
+        <input type="date" name="birthday" class="form-floating"  value="<?=date('Y-m-d', mktime($user[0]['birthday']))?>">
         <br>
         <br>
         <label for="created_at">Дата регистрации:</label>
-        <input type="date" name="created_at" class="form-floating">
+        <input type="date" name="created_at" class="form-floating" value="<?=date('Y-m-d', mktime($user[0]['created_at']))?>">
         <br>
         <br>
         <input type="submit" value="Отправить" name="submit" class="btn btn-primary">
