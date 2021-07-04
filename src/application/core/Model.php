@@ -24,6 +24,7 @@ class Model extends DataBase
     public function insert(array $dataPost): bool
     {
         unset($dataPost['submit']);
+
         if (!Validate::isCorrectFields($this->fields, $dataPost)) {
             return false;
         }
@@ -44,10 +45,9 @@ class Model extends DataBase
         } else {
             return false;
         }
-
     }
 
-    protected function select(string $query = null) :array
+    protected function select(string $query = null): array
     {
         $query = $query ?? "SELECT * FROM $this->tableName";
         try {
@@ -62,13 +62,13 @@ class Model extends DataBase
         }
     }
 
-    public function selectModel($id) :array
+    public function selectModel($id): array
     {
         $query = "SELECT * FROM $this->tableName WHERE id = $id";
         return $this->select($query);
     }
 
-    public function getFields() : array
+    public function getFields(): array
     {
         return $this->fields;
     }
@@ -79,32 +79,36 @@ class Model extends DataBase
         return $this->tableName;
     }
 
-    public function delete($id)
+    protected function delete($id)
     {
 
         $query = "delete FROM {$this->tableName} where id = $id";
         return $this->select($query);
     }
 
-    public function update($dataPost, $id)
+    protected function update($dataPost, $id)
     {
         unset($dataPost['submit']);
         if (!Validate::isCorrectFields($this->fields, $dataPost)) {
             return false;
         }
+
         $valuesUpdate = "";
-        foreach ($this->fields as $field){
+
+        foreach ($this->fields as $field) {
             $valuesUpdate .= "{$field} = :$field, ";
         }
+
         $valuesUpdate = preg_replace('/, $/', '', $valuesUpdate);
 
         $query = "UPDATE {$this->tableName} SET {$valuesUpdate} WHERE id = $id";
-        var_dump($query);
+
         $stmt = $this->db->prepare($query);
 
         foreach ($this->fields as $field) {
             $stmt->bindValue(":$field", $dataPost[$field]);
         }
+
         if ($stmt->execute()) {
 
             $this->id = $_GET['id'];
