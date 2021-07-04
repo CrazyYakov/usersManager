@@ -23,10 +23,9 @@ class UserController extends Controller
     public function actionView()
     {
         $user = new User();
-        $this->view->generate('user/view',[
+        $this->view->generate('user/view', [
             'user' => $user->getUser($_GET['id']),
         ]);
-
     }
 
     public function actionCreate()
@@ -53,12 +52,14 @@ class UserController extends Controller
     public function actionUpdate()
     {
         $user = new User();
+
         if ($_POST['submit'] && $user->update($_POST, $_GET['id'])) {
 
             $this->view->generate('user/view', [
                 'id' => $user->id,
             ]);
         }
+        
         $this->view->generate('user/update', [
             'user'  => $user->get($_GET['id']),
             'departments' => (new Department())->get(),

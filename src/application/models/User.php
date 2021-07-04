@@ -17,7 +17,7 @@ class User extends Model
 
     public function get($id = null)
     {
-        $query = !empty($id) ? "SELECT * FROM USERS WHERE id = $id" : null;
+        $query = !empty($id) ? "SELECT * FROM {$this->getTableName()} WHERE id = $id" : null;
 
         return $this->select($query);
     }
@@ -70,9 +70,9 @@ class User extends Model
         return $this->delete($id);
     }
 
-    public function updateUser()
+    public function update($dataPost, $id)
     {
-
+        return parent::update($dataPost, $id);
     }
 
 }
