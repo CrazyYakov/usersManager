@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var array $data
  * @var array $fields
@@ -14,32 +15,38 @@ $this->page = 'Пользователи';
 
     <table class="table">
         <thead>
-        <tr>
+            <tr>
 
-            <th scope="col">id</th>
-            <?php foreach ($fields as $parameter) : ?>
-                <th scope="col"> <?= $parameter ?></th>
-            <?php endforeach ?>
-            <th></th>
-        </tr>
+                <th scope="col">id</th>
+                <?php foreach ($fields as $parameter) : ?>
+                    <th scope="col"> <?= $parameter ?></th>
+                <?php endforeach ?>
+                <th></th>
+            </tr>
         </thead>
         <tbody>
-        <?php foreach ($data as $key => $person) : ?>
             <tr>
-                <th scope="row"><?= $person['id'] ?></th>
-                <td><?= $person['name'] ?></td>
-                <td><?= $person['job'] ?></td>
-                <td><?= $person['department'] ?></td>
-                <td><?= $person['salary'] ?></td>
-                <td><?= $person['birthday'] ?></td>
-                <td><?= $person['created_at'] ?></td>
-                <td>
-                    <a href="/user/view/?action=form&id=<?= $person['id'] ?>" class=" btn btn-info">Обзор</a>
-                    <a href="/user/update/?action=form&id=<?= $person['id'] ?>" class=" btn btn-info">Изменить</a>
-                    <a href="/user/delete/?action=form&id=<?= $person['id'] ?>" class=" btn btn-info">Удалить</a>
-                </td>
+                <? if (empty($data)) : ?>
+                   <td colspan="8"><h1 align="center"> <i>Нет данных </i></h1> </td>
+                <? else : ?>
+
+                    <?php foreach ($data as $key => $person) : ?>
+                        <th scope="row"><?= $person['id'] ?></th>
+                        <td><?= $person['name'] ?></td>
+                        <td><?= $person['job'] ?></td>
+                        <td><?= $person['department'] ?></td>
+                        <td><?= $person['salary'] ?></td>
+                        <td><?= $person['birthday'] ?></td>
+                        <td><?= $person['created_at'] ?></td>
+                        <td>
+                            <a href="/user/view/?action=form&id=<?= $person['id'] ?>" class=" btn btn-info">Обзор</a>
+                            <a href="/user/update/?action=form&id=<?= $person['id'] ?>" class=" btn btn-info">Изменить</a>
+                            <a href="/user/delete/?action=form&id=<?= $person['id'] ?>" class=" btn btn-info">Удалить</a>
+                        </td>
+                    <?php endforeach ?>
+
+                <? endif ?>
             </tr>
-        <?php endforeach ?>
         </tbody>
     </table>
 </div>
