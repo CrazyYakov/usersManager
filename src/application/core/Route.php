@@ -34,7 +34,7 @@ class Route
             $controller = $this->controllerName;
             $action = $this->actionName;
 
-            if (!class_exists($controller)) {
+            if (!class_exists($controller) || !method_exists($controller, $action)) {
                 throw new \Exception();
             }
             (new $controller)->$action();
