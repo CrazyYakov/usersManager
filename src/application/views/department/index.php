@@ -3,16 +3,17 @@ $this->page = 'Список департаментов';
 /**
  * @var array $departments
  * @var array $fields
+ * @var array $status
  */
 
 ?>
+
 <div class="container">
 
     <header class="pb-3 mb-4 border-bottom">
         <h1 class="mt-4">Список департаментов</h1>
-        <a href="/department/create" class=" btn btn-primary ">Добавить департамент</a>
+            <a href="/department/create" class=" btn btn-primary ">Добавить департамент</a>
     </header>
-    <h1>Department</h1>
     <table class="table">
         <thead>
             <tr>
@@ -34,15 +35,21 @@ $this->page = 'Список департаментов';
                     <tr>
                         <th scope="row"><?= $department['id'] ?></th>
                         <td><?= $department['name'] ?></td>
-                        <td>
-                            <a href="/department/view/?action=form&id=<?= $department['id'] ?>" class=" btn btn-info">Обзор</a>
-                            <a href="/department/update/?action=form&id=<?= $department['id'] ?>" class=" btn btn-info">Изменить</a>
-                            <a href="/department/delete/?action=form&id=<?= $department['id'] ?>" class=" btn btn-info">Удалить</a>
+                        <td class="dep_btns">
+                            <a href="/department/?action=view&id=<?= $department['id'] ?>" class=" btn btn-info">Обзор</a>
+                            <a href="/department/?action=update&id=<?= $department['id'] ?>" class=" btn btn-info">Изменить</a>
+                            <form
+                                    class="form_btn"
+                                    onsubmit="return confirm('Вы уверены что хотите удалить?')"
+                                    action="/department/delete?id=<?= $department['id'] ?>"
+                                    method="post"
+                            >
+                                <button type="submit"  class=" btn btn-info">Удалить</button>
+                            </form>
                         </td>
                     </tr>
                 <? endforeach ?>
             <? endif ?>
-
         </tbody>
     </table>
 </div>
