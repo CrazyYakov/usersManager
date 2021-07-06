@@ -3,6 +3,7 @@
 namespace models;
 
 use core\Model;
+use services\PostgresDataBase;
 
 
 class User extends Model
@@ -10,16 +11,9 @@ class User extends Model
     protected string $tableName = "users";
     protected array $fields = ['name', 'job_id', 'department_id', 'salary', 'birthday', 'created_at'];
 
-    public function __construct()
+    public function get(array $parameters = null)
     {
-        $this->defineModel($this->tableName, $this->fields);
-    }
-
-    public function get($id = null)
-    {
-        $query = !empty($id) ? "SELECT * FROM {$this->getTableName()} WHERE id = $id" : null;
-
-        return $this->select($query);
+        return $this->select(null, $parameters);
     }
 
     public function getUser($id)
@@ -35,10 +29,9 @@ class User extends Model
                 users.created_at               
         FROM USERS
         LEFT JOIN DEPARTMENTS as dep on dep.id = USERS.department_id
-        LEFT JOIN JOBS        as job on job.id = USERS.job_id
-        WHERE users.id = {$id}
+        LEFT JOIN JOBS        as job on job.id = USERS.job_id        
         EOT;
-        return $this->select($query);
+        return $this->select($query, ['users.id' => $id]);
     }
 
     public function getAll()
@@ -65,9 +58,9 @@ class User extends Model
         return $this->insert($data);
     }
 
-    public function deleteUser($id)
+    public function deleteUser(array $parameters)
     {
-        return $this->delete($id);
+        return $this->delete($parameters);
     }
 
     public function update($dataPost, $id)

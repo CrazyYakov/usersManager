@@ -10,17 +10,9 @@ class Department extends Model
     protected string $tableName = "departments";
     protected array $fields = ['name'];
 
-
-    public function __construct()
+    public function get(array $parameters = null)
     {
-        $this->defineModel($this->tableName, $this->fields);
-    }
-
-    public function get($id = null)
-    {
-        $query = !empty($id) ? "SELECT * FROM {$this->getTableName()} WHERE id = $id" : null;
-
-        return $this->select($query);
+        return $this->select(null, $parameters);
     }
 
     public function create($data)
@@ -28,14 +20,13 @@ class Department extends Model
         return $this->insert($data);
     }
 
-
     public function update($dataPost, $id)
     {
         return parent::update($dataPost, $id);
     }
 
-    public function delete($id)
+    public function delete(array $parameters)
     {
-        return parent::delete($id);
+        return parent::delete($parameters);
     }
 }

@@ -6,7 +6,7 @@ $includeFiles = services\Autoloader::includeFiles($config['application']);
 
 $includeFiles->register();
 
-services\DataBase::getInstance($config['database']);
+services\PostgresDataBase::getInstance($config['database']);
 
 $app = (core\Route::start());
 

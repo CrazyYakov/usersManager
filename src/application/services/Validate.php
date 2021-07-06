@@ -22,12 +22,12 @@ class Validate
         $url = parse_url($url);
         $routes['path'] = explode('/', $url['path']);
 
-//        if ($url['query']) {
-//            foreach (explode('&', $url['query']) as $varGet) {
-//                list($key, $value) = explode('=', $varGet);
-//                $routes['query'][$key] = $value;
-//            }
-//        }
+        if ($url['query']) {
+            foreach (explode('&', $url['query']) as $varGet) {
+                list($key, $value) = explode('=', $varGet);
+                $routes['query'][$key] = $value;
+            }
+        }
 
         return $routes;
 

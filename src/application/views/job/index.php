@@ -2,6 +2,7 @@
 $this->page = 'Список работ';
 /**
  * @var array $jobs
+ * @var array $fields
  */
 
 ?>
@@ -10,7 +11,6 @@ $this->page = 'Список работ';
         <h1 class="mt-4">Список работ</h1>
         <a href="/job/create" class=" btn btn-primary ">Добавить работу</a>
     </header>
-    <h1>job</h1>
     <table class="table">
         <thead>
             <tr>
@@ -35,7 +35,14 @@ $this->page = 'Список работ';
                         <td>
                             <a href="/job/view/?action=form&id=<?= $job['id'] ?>" class=" btn btn-info">Обзор</a>
                             <a href="/job/update/?action=form&id=<?= $job['id'] ?>" class=" btn btn-info">Изменить</a>
-                            <a href="/job/delete/?action=form&id=<?= $job['id'] ?>" class=" btn btn-info">Удалить</a>
+                            <form
+                                    class="form_btn"
+                                    onsubmit="return confirm('Вы уверены что хотите удалить?')"
+                                    action="/job/delete?id=<?= $job['id'] ?>"
+                                    method="post"
+                            >
+                                <button type="submit"  class=" btn btn-info">Удалить</button>
+                            </form>
                         </td>
                     </tr>
                 <? endforeach ?>

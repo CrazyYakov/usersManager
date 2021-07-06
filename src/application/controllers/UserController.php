@@ -45,7 +45,9 @@ class UserController extends Controller
     public function actionDelete()
     {
         $user = new User();
-        $user->deleteUser($_GET['id']);
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $user->deleteUser(['id' => $_GET['id']]);
+        }
         $this->view->generate('user/index');
     }
 
@@ -53,15 +55,15 @@ class UserController extends Controller
     {
         $user = new User();
 
-        if ($_POST['submit'] && $user->update($_POST, $_GET['id'])) {
+        if ($_POST['submit'] && $user->update($_POST, ['id' => $_GET['id']])) {
 
             $this->view->generate('user/view', [
                 'id' => $user->id,
             ]);
         }
-        
+
         $this->view->generate('user/update', [
-            'user'  => $user->get($_GET['id']),
+            'user' => $user->get(['id' => $_GET['id']]),
             'departments' => (new Department())->get(),
             'jobs' => (new Job())->get(),
         ]);

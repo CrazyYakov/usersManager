@@ -11,7 +11,7 @@ class DepartmentController extends Controller
     function actionIndex()
     {
         $department = new Department();
-        
+
         $this->view->generate('department/index', [
             'departments' => $department->get(),
             'fields' => $department->getFields()
@@ -21,9 +21,9 @@ class DepartmentController extends Controller
     function actionCreate()
     {
         $department = new Department();
-        if ($_POST['submit'] && $department->insert($_POST)){
+        if ($_POST['submit'] && $department->insert($_POST)) {
             $this->view->generate('department/view', [
-                'department' => $department->get($_GET['id']),
+                'id' => $department->id,
             ]);
         }
 
@@ -34,7 +34,7 @@ class DepartmentController extends Controller
     {
         $department = new Department();
         $this->view->generate('department/view', [
-            'department' => $department->get($_GET['id']),
+            'department' => $department->get(['id' => $_GET['id']]),
         ]);
     }
 
@@ -42,22 +42,26 @@ class DepartmentController extends Controller
     {
         $department = new Department();
 
-        if ($_POST['submit'] && $department->update($_POST, $_GET['id'])) {
+        if ($_POST['submit'] && $department->update($_POST, ['id' => $_GET['id']])) {
 
             $this->view->generate('department/view', [
                 'id' => $department->id,
             ]);
         }
-        
+
         $this->view->generate('department/update', [
-            'department'  => $department->get($_GET['id']),
+            'department' => $department->get(['id' => $_GET['id']]),
         ]);
     }
 
     public function actionDelete()
     {
         $department = new Department();
-        $department->delete($_GET['id']);
+
+        if (strtolower($_SERVER['REQUEST_METHOD']) == strtolower('POST')) {
+            $department->delete(['id' => $_GET['id']]);
+        }
+
         $this->view->generate('department/index');
     }
 

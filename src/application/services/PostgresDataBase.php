@@ -4,7 +4,7 @@ namespace services;
 
 use PDO;
 
-class DataBase
+class PostgresDataBase
 {
     private $dsn;
     private $username;
@@ -53,4 +53,13 @@ class DataBase
         return self::getInstance()->lastInsertId($name);
     }
 
+    public function errorCode()
+    {
+        return self::getInstance()->errorCode();
+    }
+
+    public function errorInfo()
+    {
+        return self::getInstance()->errorInfo();
+    }
 }

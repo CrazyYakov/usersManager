@@ -4,6 +4,7 @@
 namespace models;
 
 use core\Model;
+use services\PostgresDataBase as db;
 
 class Job extends Model
 {
@@ -11,16 +12,9 @@ class Job extends Model
     protected array $fields = ['name'];
 
 
-    public function __construct()
+    public function get(array $parameters = null)
     {
-        $this->defineModel($this->tableName, $this->fields);
-    }
-
-    public function get($id = null)
-    {
-        $query = !empty($id) ? "SELECT * FROM {$this->getTableName()} WHERE id = $id" : null;
-
-        return $this->select($query);
+        return $this->select(null, $parameters);
     }
 
     public function create($data)
@@ -29,13 +23,13 @@ class Job extends Model
     }
 
 
-    public function update($dataPost, $id)
+    public function update(array $dataPost,array $parameters)
     {
-        return parent::update($dataPost, $id);
+        return parent::update($dataPost, $parameters);
     }
 
-    public function delete($id)
+    public function delete($parameters)
     {
-        return parent::delete($id);
+        return parent::delete($parameters);
     }
 }

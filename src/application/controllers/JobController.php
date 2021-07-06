@@ -24,7 +24,7 @@ class JobController extends Controller
         $job = new Job();
         if ($_POST['submit'] && $job->insert($_POST)) {
             $this->view->generate('job/view', [
-                'job' => $job->get($_GET['id']),
+                'id' => $job->id,
             ]);
         }
 
@@ -35,7 +35,7 @@ class JobController extends Controller
     {
         $job = new Job();
         $this->view->generate('job/view', [
-            'job' => $job->get($_GET['id']),
+            'job' => $job->get(['id' => $_GET['id']]),
         ]);
     }
 
@@ -43,15 +43,14 @@ class JobController extends Controller
     {
         $job = new Job();
 
-        if ($_POST['submit'] && $job->update($_POST, $_GET['id'])) {
-
-            $this->view->generate('job/view', [
-                'id' => $job->id,
-            ]);
-        }
+        if ($_POST['submit'] && $job->update($_POST, ['id' => $_GET['id']])) {
+        $this->view->generate('job/view', [
+            'id' => $job->id,
+        ]);
+    }
 
         $this->view->generate('job/update', [
-            'job'  => $job->get($_GET['id']),
+            'job' => $job->get(['id' => $_GET['id']]),
         ]);
     }
 

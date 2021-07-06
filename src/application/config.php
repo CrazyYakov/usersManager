@@ -23,9 +23,11 @@ return [
             'Model',
             'View',
             'Route',
+            'Repository',
+            'Request',
         ],
         'services' =>[
-            'DataBase',
+            'PostgresDataBase',
             'Validate',
         ],
 
