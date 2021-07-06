@@ -20,9 +20,8 @@ class Route
         }
 
         $route = new self;
-        $routes =  Validate::getParseUrl($_SERVER['REQUEST_URI']);
-        $route->setControllerAction($routes['path']);
-        $route->url = "{$routes['path'][1]}/" . (!empty($routes['path'][2]) ? $routes['path'][2] : "index");
+        $routes = Validate::getParseUrl($_SERVER['REQUEST_URI']);
+        $route->setControllerAction($routes);
         self::$route = $route;
         return self::$route;
     }
@@ -33,7 +32,6 @@ class Route
         try {
             $controller = $this->controllerName;
             $action = $this->actionName;
-
             if (!class_exists($controller) || !method_exists($controller, $action)) {
                 throw new \Exception();
             }
@@ -46,17 +44,33 @@ class Route
 
     protected function setControllerAction($routes)
     {
+        $controller_name = "";
+        $route_path = $routes['path'];
         // получаем имя контроллера
-        if (!empty($routes[1])) {
-            $controller_name = ucfirst($routes[1]);
+        if (!empty($route_path[1])) {
+            $controller_name = ucfirst($route_path[1]);
             $this->controllerName = "controllers\\{$controller_name}Controller";
         }
-
+        $action_name = "";
         // получаем имя экшена
-        if (!empty($routes[2])) {
-            $action_name = ucfirst($routes[2]);
+        if (!empty($route_path[2])) {
+            $action_name = ucfirst($route_path[2]);
             $this->actionName = "action{$action_name}";
+        } else {
+            $route_query = $routes['query'];
+            if (is_array($route_query) && key_exists('action', $route_query)) {
+                $action_name = ucfirst($route_query['action']);
+                $this->actionName = "action{$action_name}";
+            }
         }
+
+        $url = strtolower("$controller_name/" . (!empty($action_name) ? $action_name : "index"));
+        $this->setUrl($url);
+    }
+
+    protected function setUrl(string $url): void
+    {
+        $this->url = $url;
     }
 
     public function getUrl(): string
