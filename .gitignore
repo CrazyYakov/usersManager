@@ -1,4 +1,4 @@
 .env
 .vscode/*
-*services/pgsql/data
+services/pgsql/*
 
