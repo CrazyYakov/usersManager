@@ -4,6 +4,7 @@ namespace core;
 
 use services\Validate;
 
+
 class Route
 {
 
@@ -12,16 +13,18 @@ class Route
     protected string $url;
 
     protected static Route $route;
+    public Request $request;
 
-    public static function start(): Route
+    public static function start(Request $request): Route
     {
         if (!empty(self::$route)) {
             return self::$route;
         }
 
         $route = new self;
-        $routes = Validate::getParseUrl($_SERVER['REQUEST_URI']);
+        $routes = Validate::getParseUrl(filter_var($_SERVER['REQUEST_URI']), FILTER_SANITIZE_ENCODED);
         $route->setControllerAction($routes);
+        $route->request = $request;
         self::$route = $route;
         return self::$route;
     }
@@ -35,7 +38,7 @@ class Route
             if (!class_exists($controller) || !method_exists($controller, $action)) {
                 throw new \Exception();
             }
-            (new $controller)->$action();
+            (new $controller)->$action($this->request);
         } catch (\Exception $e) {
             Route::errorPage404();
             die();

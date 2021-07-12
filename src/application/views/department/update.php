@@ -1,6 +1,9 @@
 <?php
 $this->page = 'Обновить  пользователя';
 
+/**
+ * @var array $department
+ */
 ?>
 
 
@@ -14,5 +17,5 @@ $this->page = 'Обновить  пользователя';
         <input type="submit" value="Отправить" name="submit" class="btn btn-primary mt-5 mb-3">
 
     </form>
-    <a href="/department" class="btn btn-primary">Назад</a>
-</div>>
+    <a href="<?=($_SERVER['HTTP_REFERER'] ?? "/department") ?>" class="btn btn-primary">Назад</a>
+</div>

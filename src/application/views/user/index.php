@@ -6,20 +6,19 @@
  */
 
 $this->page = 'Пользователи';
+
 ?>
 <div class="container">
-    <header class="pb-3 mb-4 border-bottom">
-        <h1 class="mt-4">Список сотрудников</h1>
-        <a href="/user/create" class=" btn btn-primary ">Создать пользователя</a>
+    <header class="pb-3 mb-4 border-bottom" role="presentation">
+        <h1 class="mt-4"><q>Список сотрудников</q></h1>
+        <a href="/user/create" class=" btn btn-primary" role="button">Создать пользователя</a>
     </header>
 
     <table class="table">
         <thead>
         <tr>
-
-            <th scope="col">id</th>
-            <?php foreach ($fields as $parameter) : ?>
-                <th scope="col"> <?= $parameter ?></th>
+            <?php foreach ($fields as $field) : ?>
+                <th scope="col"> <?= $field ?></th>
             <?php endforeach ?>
             <th></th>
         </tr>
@@ -35,15 +34,15 @@ $this->page = 'Пользователи';
             <?php foreach ($data as $key => $person) : ?>
                 <tr>
                     <th scope="row"><?= $person['id'] ?></th>
-                    <td><?= $person['name'] ?></td>
-                    <td><?= $person['job'] ?></td>
-                    <td><?= $person['department'] ?></td>
-                    <td><?= $person['salary'] ?></td>
-                    <td><?= $person['birthday'] ?></td>
-                    <td><?= $person['created_at'] ?></td>
+                    <td><?= $person[$fields['name']] ?></td>
+                    <td><?= $person[$fields['job']] ?></td>
+                    <td><?= $person[$fields['department']] ?></td>
+                    <td><?= $person[$fields['salary']] ?></td>
+                    <td><?= $person[$fields['birthday']] ?></td>
+                    <td><?= $person[$fields['created_at']] ?></td>
                     <td>
-                        <a href="/user/view/?action=form&id=<?= $person['id'] ?>" class=" btn btn-info">Обзор</a>
-                        <a href="/user/update/?action=form&id=<?= $person['id'] ?>" class=" btn btn-info">Изменить</a>
+                        <a href="/user/view/?&id=<?= $person['id'] ?>" class=" btn btn-info">Обзор</a>
+                        <a href="/user/update/?&id=<?= $person['id'] ?>" class=" btn btn-info">Изменить</a>
                         <form
                                 class="form_btn"
                                 onsubmit="return confirm('Вы уверены что хотите удалить?')"

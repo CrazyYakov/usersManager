@@ -8,13 +8,12 @@ $this->page = 'Список работ';
 ?>
 <div class="container">
     <header class="pb-3 mb-4 border-bottom">
-        <h1 class="mt-4">Список работ</h1>
-        <a href="/job/create" class=" btn btn-primary ">Добавить работу</a>
+        <h1 class="mt-4">Список Профессий</h1>
+        <a href="/job/create" class=" btn btn-primary" >Добавить профессию</a>
     </header>
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">id</th>
                 <?php foreach ($fields as $parameter) : ?>
                     <th scope="col"> <?= $parameter ?></th>
                 <?php endforeach ?>

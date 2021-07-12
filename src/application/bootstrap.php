@@ -1,5 +1,7 @@
 <?php
 
+use core\Request;
+
 $config = include(__DIR__ . "/config.php");
 
 $includeFiles = services\Autoloader::includeFiles($config['application']);
@@ -8,7 +10,9 @@ $includeFiles->register();
 
 services\PostgresDataBase::getInstance($config['database']);
 
-$app = (core\Route::start());
+$request = Request::initialization();
+
+$app = (core\Route::start($request));
 
 $app->run();
 

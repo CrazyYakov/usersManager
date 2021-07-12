@@ -47,8 +47,8 @@ $this->page = 'Создание пользователя';
 
         <br>
         <br>
-        <input type="text" name="salary" class="form-floating">
-        <label for="exampleFormControlInput1" class="form-label ">Введите зарплату </label>
+        <input type="number" name="salary" class="form-floating">
+        <label for="exampleFormControlInput1" class="form-label">Введите зарплату </label>
         <br>
         <label for="birthday">День Рождения:</label>
         <input type="date" name="birthday" class="form-floating">
@@ -58,9 +58,10 @@ $this->page = 'Создание пользователя';
         <input type="date" name="created_at" class="form-floating">
         <br>
         <br>
-        <input type="submit" value="Отправить" name="submit" class="btn btn-primary">
-
+        <button type="submit" value="ok" name="submit" class="btn btn-primary">
+            Сохранить
+        </button>
     </form>
     <br>
     <a href="/user" class="btn btn-primary">Назад</a>
-</div>>
+</div>

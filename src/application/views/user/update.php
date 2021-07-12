@@ -58,17 +58,17 @@ $this->page = 'Обновить характеристику пользоват�
         <br>
         <label for="birthday">День Рождения:</label>
         <input type="date" name="birthday" class="form-floating"
-               value="<?= date('Y-m-d', mktime($user[0]['birthday'])) ?>">
+               value="<?= $user[0]['birthday'] ?>">
         <br>
         <br>
         <label for="created_at">Дата регистрации:</label>
         <input type="date" name="created_at" class="form-floating"
-               value="<?= date('Y-m-d', mktime($user[0]['created_at'])) ?>">
+               value="<?= $user[0]['created_at'] ?>">
         <br>
         <br>
-        <input type="submit" value="Отправить" name="submit" class="btn btn-primary">
+        <input type="submit" value="Сохранить" name="submit" class="btn btn-primary">
 
     </form>
     <br>
-    <a href="/user" class="btn btn-primary">Назад</a>
-</div>>
+    <a href="<?=($_SERVER['HTTP_REFERER'] ?? "/user") ?>" class="btn btn-primary">Назад</a>
+</div>

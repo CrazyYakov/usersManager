@@ -8,7 +8,7 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation">
         <div class="container-fluid">
             <div class="collapse navbar-collapse container" id="navbarNav">
                 <ul class="navbar-nav">
@@ -22,7 +22,7 @@
                         <a class="nav-link" href="/department">Список департаментов</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/job">Список работ</a>
+                        <a class="nav-link" href="/job">Список професий</a>
                     </li>
                 </ul>
             </div>

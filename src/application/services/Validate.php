@@ -6,7 +6,7 @@ namespace services;
 
 class Validate
 {
-    public static function isCorrectFields($tableFields, $postFields)
+    public static function isCorrectFields(?array $tableFields, ?array $postFields)
     {
         $keyFieldPost = array_keys($postFields);
         $result = array_diff($tableFields, $keyFieldPost);
@@ -23,13 +23,8 @@ class Validate
         $routes['path'] = explode('/', $url['path']);
 
         if ($url['query']) {
-            foreach (explode('&', $url['query']) as $varGet) {
-                list($key, $value) = explode('=', $varGet);
-                $routes['query'][$key] = $value;
-            }
+            $routes['query'] = $_GET;
         }
-
         return $routes;
-
     }
 }
