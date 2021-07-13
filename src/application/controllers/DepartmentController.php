@@ -3,7 +3,6 @@
 namespace controllers;
 
 use core\Controller;
-use core\Model;
 use core\Request;
 use models\Department;
 use models\User;

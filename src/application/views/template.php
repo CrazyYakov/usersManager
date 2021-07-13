@@ -1,3 +1,4 @@
+<?php /** @var  $content */ ?>
 <!DOCTYPE html>
 <html lang="ru">
 <head>

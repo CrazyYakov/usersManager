@@ -11,7 +11,8 @@ class View
     function generate($content_view, $data = null)
     {
 
-        if ((Route::start()->getUrl() != "{$content_view}" ) && $content_view != 'main') {
+        if (
+            (Route::start()->getUrl() != $content_view) && (Route::start()->getUrl() != '/index')) {
 
             if (!empty($data)) {
                 $methodGet = "?";

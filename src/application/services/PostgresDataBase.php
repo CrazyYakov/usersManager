@@ -12,7 +12,7 @@ class PostgresDataBase
 
     private static PDO $instance;
 
-    protected function __construct($config = [])
+    protected function __construct(array $config = [])
     {
         $this->dsn = $config['dsn'];
         $this->username = $config['username'];

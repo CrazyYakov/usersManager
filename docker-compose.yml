@@ -10,6 +10,7 @@ services:
     links:
       - postgres
       - memcached
+      - redis
     environment:
       SERVICE_NAME: app
       SERVICE_TAGS: dev
@@ -37,3 +38,7 @@ services:
     ports:
       - 11211:11211
       #6379:6379 - port Redis
+  redis:
+    image: redis:6-alpine
+    ports:
+      - 6379:6379

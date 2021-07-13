@@ -15,7 +15,7 @@ class Route
     protected static Route $route;
     public Request $request;
 
-    public static function start(Request $request): Route
+    public static function start(Request $request = null): Route
     {
         if (!empty(self::$route)) {
             return self::$route;

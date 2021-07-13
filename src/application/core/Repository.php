@@ -50,7 +50,7 @@ class Repository
     protected function select(string $query = null, array $values = null, string $orderBy = null)
     {
         try {
-            $query = $query ?? $this->selectFromTables();
+            $query = $query ?? $this->selectFromTable();
             if ($values) {
                 $bindValues = $this->bindValues($values, 'and');
                 $query .= " WHERE $bindValues";
@@ -77,6 +77,10 @@ class Repository
 
     protected function delete(array $parameters)
     {
+        if ($parameters == null){
+            return false;
+        }
+
         $query = "delete FROM $this->tableName";
         return $this->select($query, $parameters);
     }
@@ -110,7 +114,7 @@ class Repository
         }
     }
 
-    private function selectFromTables(): string
+    private function selectFromTable(): string
     {
         return "SELECT * FROM $this->tableName";
     }
