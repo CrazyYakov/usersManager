@@ -6,7 +6,7 @@ namespace services;
 
 class Validate
 {
-    public static function isCorrectFields(?array $tableFields, ?array $postFields)
+    public static function hastFields(?array $tableFields, ?array $postFields)
     {
         $keyFieldPost = array_keys($postFields);
         $result = array_diff($tableFields, $keyFieldPost);

@@ -14,13 +14,6 @@ $request = Request::initialization();
 
 $app = (core\Route::start($request));
 
-
-$redis = new Redis();
-$redis->connect('redis',6379);
-
-var_dump($redis);
-//exit();
-
 $app->run();
 
 

@@ -81,6 +81,10 @@ class Route
         return $this->url;
     }
 
+    public function getActionName(): string
+    {
+        return strtolower(preg_replace('/action/', '', $this->actionName));
+    }
     public function redirect(string $url)
     {
         $location = "Location: $url";

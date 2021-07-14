@@ -11,8 +11,14 @@ class View
     function generate($content_view, $data = null)
     {
 
+        if (!preg_match("/\//", $content_view)) {
+            $urlPath = "{$content_view}/" . Route::start()->getActionName();
+        } else {
+            $urlPath = $content_view;
+        }
+
         if (
-            (Route::start()->getUrl() != $content_view) && (Route::start()->getUrl() != '/index')) {
+            (Route::start()->getUrl() != $urlPath) && (Route::start()->getUrl() != '/index')) {
 
             if (!empty($data)) {
                 $methodGet = "?";

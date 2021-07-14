@@ -44,7 +44,8 @@ class Model extends Repository
                 foreach ($result as $row) {
                     for ($i = 0; $i < count($row); $i++) {
                         if (!is_int(array_keys($row)[$i])) {
-                            $this->__set(array_keys($row)[$i], $row[array_keys($row)[$i]]);
+                            $this->data[array_keys($row)[$i]] = $row[array_keys($row)[$i]];
+//                            $this->__set(array_keys($row)[$i],$row[array_keys($row)[$i]] );
                         }
                     }
                 }

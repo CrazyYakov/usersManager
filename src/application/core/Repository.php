@@ -28,15 +28,16 @@ class Repository
     public function insert(?array $dataPost): bool
     {
         unset($dataPost['submit']);
-
-        if (!Validate::isCorrectFields($this->fields, $dataPost)) {
+        $dataPost = array_filter($dataPost);
+        if (!Validate::hastFields($this->fields, $dataPost)) {
             return false;
         }
-        $values = implode(",:", $this->fields);
-        $field = implode(',', $this->fields);
+        $values = implode(",:", array_keys($dataPost));
+        $field = implode(',', array_keys($dataPost));
         $query = "INSERT INTO $this->tableName ($field) VALUES (:$values)";
+
         $stmt = $this->db->prepare($query);
-        foreach ($this->fields as $field) {
+        foreach (array_keys($dataPost) as $field) {
             $stmt->bindValue(":$field", $dataPost[$field]);
         }
 
@@ -89,7 +90,7 @@ class Repository
     {
         unset($dataPost['submit']);
 
-        if (!Validate::isCorrectFields($this->fields, $dataPost)) {
+        if (!Validate::hastFields($this->fields, $dataPost)) {
             return false;
         }
 

@@ -40,7 +40,6 @@ class Autoloader
 
         }
         return false;
-
     }
 
     private static function recurseDirectories($arrayFiles, $path = null): array
@@ -55,7 +54,6 @@ class Autoloader
                 $files = array_merge($files, $dirWithFiles);
             }
         }
-
         return $files;
     }
 }
