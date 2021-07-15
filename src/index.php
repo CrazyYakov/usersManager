@@ -1,7 +1,8 @@
 <?php
 
-ini_set('session.save_handler', 'redis');
-ini_set('session.save_path', 'redis:6379');
+
+//ini_set('session.cookie_lifetime', 10);
+session_start();
 
 /**
  * Include Autoloader

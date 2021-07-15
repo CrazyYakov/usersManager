@@ -9,6 +9,7 @@ services:
       - ./services/php/php.ini:/usr/local/etc/php/conf.d/40-custom.ini
     links:
       - postgres
+      - node
       - memcached
       - redis
     environment:
@@ -33,6 +34,10 @@ services:
       - 5432:5432
     volumes:
       - ./services/pgsql/data:/var/lib/postgresql/data
+  node:
+    image: node:16-alpine
+    ports:
+    - 3000:3000
   memcached:
     image: memcached:1.4-alpine
     ports:

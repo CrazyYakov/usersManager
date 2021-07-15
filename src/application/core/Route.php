@@ -2,6 +2,8 @@
 
 namespace core;
 
+use Exception;
+use services\Session;
 use services\Validate;
 
 
@@ -13,18 +15,21 @@ class Route
     protected string $url;
 
     protected static Route $route;
-    public Request $request;
+    public ?Request $request;
+    public ?Session $session;
 
-    public static function start(Request $request = null): Route
+    public static function getRoute(Request $request = null, Session $session = null): Route
     {
         if (!empty(self::$route)) {
             return self::$route;
         }
 
         $route = new self;
-        $routes = Validate::getParseUrl(filter_var($_SERVER['REQUEST_URI']), FILTER_SANITIZE_ENCODED);
+        $routes = Validate::getParseUrl(filter_var($_SERVER['REQUEST_URI']));
         $route->setControllerAction($routes);
         $route->request = $request;
+        $route->session = $session;
+
         self::$route = $route;
         return self::$route;
     }
@@ -33,22 +38,27 @@ class Route
     {
 
         try {
+            if ($this->session->getSession() == null) {
+                $this->setControllerAction([1 => 'Auth', 2 => 'login']);
+            }
+
             $controller = $this->controllerName;
             $action = $this->actionName;
+
             if (!class_exists($controller) || !method_exists($controller, $action)) {
-                throw new \Exception();
+                throw new Exception();
             }
-            (new $controller)->$action($this->request);
-        } catch (\Exception $e) {
+
+            (new $controller)->$action($this->request, $this->session);
+        } catch (Exception $e) {
             Route::errorPage404();
-            die();
         }
     }
 
-    protected function setControllerAction($routes)
+    protected function setControllerAction(array $routes)
     {
         $controller_name = "";
-        $route_path = $routes['path'];
+        $route_path = $routes['path'] ?? $routes;
         // получаем имя контроллера
         if (!empty($route_path[1])) {
             $controller_name = ucfirst($route_path[1]);
@@ -85,6 +95,7 @@ class Route
     {
         return strtolower(preg_replace('/action/', '', $this->actionName));
     }
+
     public function redirect(string $url)
     {
         $location = "Location: $url";

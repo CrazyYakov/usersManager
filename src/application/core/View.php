@@ -12,13 +12,12 @@ class View
     {
 
         if (!preg_match("/\//", $content_view)) {
-            $urlPath = "{$content_view}/" . Route::start()->getActionName();
+            $urlPath = "{$content_view}/" . Route::getRoute()->getActionName();
         } else {
             $urlPath = $content_view;
         }
-
         if (
-            (Route::start()->getUrl() != $urlPath) && (Route::start()->getUrl() != '/index')) {
+            (Route::getRoute()->getUrl() != $urlPath) && (Route::getRoute()->getUrl() != '/index')) {
 
             if (!empty($data)) {
                 $methodGet = "?";
@@ -27,7 +26,7 @@ class View
                 }
             }
             $url = "/{$content_view}" . ($methodGet ?? "");
-            Route::start()->redirect($url);
+            Route::getRoute()->redirect($url);
         }
         ob_start();
         if (is_array($data)) {

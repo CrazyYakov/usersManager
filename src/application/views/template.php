@@ -9,6 +9,7 @@
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
+<? if (isset($_SESSION['session_login']) && !empty($_SESSION['session_login'])): ?>
     <nav class="navbar navbar-expand-lg navbar-light bg-light" role="navigation">
         <div class="container-fluid">
             <div class="collapse navbar-collapse container" id="navbarNav">
@@ -29,6 +30,7 @@
             </div>
         </div>
     </nav>
+<? endif ?>
 <?= $content; ?>
 </body>
 </html>

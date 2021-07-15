@@ -27,4 +27,10 @@ class Validate
         }
         return $routes;
     }
+
+    public static function secure($var)
+    {
+        return (is_array($var)) ? array_map(array('self', 'secure'), $var) :
+            htmlspecialchars($var, ENT_COMPAT);
+    }
 }

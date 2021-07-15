@@ -3,6 +3,7 @@
 
 namespace core;
 
+use services\Validate;
 
 class Request
 {
@@ -24,20 +25,14 @@ class Request
         return self::$request;
     }
 
-    public function secure($var)
-    {
-        return (is_array($var)) ? array_map(array($this, 'secure'), $var) :
-            htmlspecialchars($var, ENT_COMPAT);
-    }
-
     public function get($key = '')
     {
         if (!empty($key)) {
             if (is_array($_GET[$key])) {
-                $array = $this->secure($_GET[$key]);
+                $array = Validate::secure($_GET[$key]);
                 return filter_var_array($array, FILTER_SANITIZE_STRING);
             }else{
-                return $this->secure(filter_input(INPUT_GET, $key));
+                return Validate::secure(filter_input(INPUT_GET, $key));
             }
         } else {
             $this->get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
@@ -50,10 +45,10 @@ class Request
         if (!empty($key)) {
 
             if (is_array($_POST[$key])) {
-                $array = $this->secure($_POST[$key]);
+                $array = Validate::secure($_POST[$key]);
                 return filter_var_array($array, FILTER_SANITIZE_STRING);
             }else{
-                return $this->secure(filter_input(INPUT_POST, $key));
+                return Validate::secure(filter_input(INPUT_POST, $key));
             }
         } else {
             $this->post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);

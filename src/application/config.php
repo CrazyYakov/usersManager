@@ -11,7 +11,8 @@ return [
             'UserController',
             'DepartmentController',
             'SiteController',
-            'JobController'
+            'JobController',
+            'AuthController'
         ],
         'models' => [
             'User',
@@ -29,6 +30,7 @@ return [
         'services' =>[
             'PostgresDataBase',
             'Validate',
+            'Session'
         ],
 
     ]
