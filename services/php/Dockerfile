@@ -16,7 +16,15 @@ RUN apt-get install -y --no-install-recommends apt-utils \
     && apt-get install -y libicu-dev \
     && apt-get install -y zlib1g-dev \
     && apt-get install -y libonig-dev \
-    && apt-get install -y libpq-dev
+    && apt-get install -y libpq-dev \
+    && apt-get install -y vim
+
+
+RUN apt-get install -y nodejs
+#RUN apt-get install -y npm
+
+#PHP pecl redis
+RUN pecl install -o -f redis
 
 # PHP EXTENSIONS
 RUN docker-php-ext-install bcmath
@@ -26,6 +34,8 @@ RUN docker-php-ext-install sockets
 RUN docker-php-ext-install exif
 RUN docker-php-ext-install mbstring
 RUN docker-php-ext-install gd
+
+
 
 # COMPOSER
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
