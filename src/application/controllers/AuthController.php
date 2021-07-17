@@ -11,15 +11,16 @@ class AuthController extends Controller
 {
     public function actionLogin(Request $request, Session $session)
     {
+        var_dump($session->getSession());
         $data = ['login' => 'root', 'password' => '1234'];
 
         if (($data['login'] == $request->post('login')) && ($data['password'] == $request->post('password'))) {
-            $session->setSession(['session_login'=>'ok']);
+            $_SESSION['session_login'] = 1;
+            var_dump($_SESSION);
+            $session->setSession('session_login', '1');
             $this->view->generate('site');
         }
 
-        $this->view->generate('auth/login', [
-            'session_login' => $session->getSession('login'),
-        ]);
+        $this->view->generate('auth/login');
     }
 }

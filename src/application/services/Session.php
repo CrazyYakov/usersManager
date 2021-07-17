@@ -16,18 +16,22 @@ class Session
             return self::$request;
         }
         self::$request = new self;
-        self::$request->setSession($session);
+        if ($session != null){
+            self::$request->$session[] = $session;
+        }
         return self::$request;
     }
 
     /**
-     * @param array $session
+     * @param $key
+     * @param $value
      */
-    public function setSession(?array $session): void
+    public function setSession($key, $value): void
     {
-        if ($session != null){
-            array_push($this->session, $session);
-            $_SESSION['session_login'] = $session['session_login'];
+        $log = $key;
+        $_SESSION['session_login'] = $value;
+        if ($value != null && $key != null){
+            $this->session[$key] = $value;
         }
     }
 
