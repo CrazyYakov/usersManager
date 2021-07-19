@@ -8,16 +8,29 @@ class View
 
     public string $page = "Document";
 
+    public Request $request;
+
+    public Session $session;
+
+    public Route $route;
+
+    public function __construct()
+    {
+        $this->request = Request::getInstance();
+        $this->session = Session::getInstance();
+        $this->route = Route::getInstance();
+    }
+
     function generate($content_view, $data = null)
     {
 
         if (!preg_match("/\//", $content_view)) {
-            $urlPath = "{$content_view}/" . Route::getRoute()->getActionName();
+            $urlPath = "{$content_view}/" . $this->route->getActionName();
         } else {
             $urlPath = $content_view;
         }
         if (
-            (Route::getRoute()->getUrl() != $urlPath) && (Route::getRoute()->getUrl() != '/index')) {
+            ($this->route->getUrl() != $urlPath) && ($this->route->getUrl() != '/index')) {
 
             if (!empty($data)) {
                 $methodGet = "?";
@@ -26,7 +39,7 @@ class View
                 }
             }
             $url = "/{$content_view}" . ($methodGet ?? "");
-            Route::getRoute()->redirect($url);
+            $this->route->redirect($url);
         }
         ob_start();
         if (is_array($data)) {

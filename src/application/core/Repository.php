@@ -4,7 +4,6 @@
 namespace core;
 
 use PDOException;
-use services\Validate;
 use PDO;
 
 class Repository
@@ -12,6 +11,8 @@ class Repository
     protected PDO $db;
     protected string $tableName;
     protected array $fields;
+
+    use \traits\Helpers;
 
     protected function defineModel($table, $fields, $dataBase)
     {
@@ -29,7 +30,7 @@ class Repository
     {
         unset($dataPost['submit']);
         $dataPost = array_filter($dataPost);
-        if (!Validate::hastFields($this->fields, $dataPost)) {
+        if (!$this->hastFields($this->fields, $dataPost)) {
             return false;
         }
         $values = implode(",:", array_keys($dataPost));
@@ -90,7 +91,7 @@ class Repository
     {
         unset($dataPost['submit']);
 
-        if (!Validate::hastFields($this->fields, $dataPost)) {
+        if (!$this->hastFields($this->fields, $dataPost)) {
             return false;
         }
 

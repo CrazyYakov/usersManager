@@ -1,22 +1,22 @@
 <?php
 
 use core\Request;
-use services\Session;
+use core\Session;
 
 
 $config = include(__DIR__ . "/../application/config.php");
 
-$includeFiles = services\Autoloader::includeFiles($config['application']);
+$includeFiles = services\Autoloader::getInstance();
 
 $includeFiles->register();
 
 services\PostgresDataBase::getInstance($config['database']);
 
-$session = Session::initialization($_SESSION);
+$session = Session::getInstance($_SESSION);
 
-$request = Request::initialization();
+$request = Request::getInstance();
 
-$app = (core\Route::getRoute($request, $session));
+$app = (core\Route::getInstance(['request' => $request, 'session' => $session]));
 
 $app->run();
 

@@ -15,4 +15,4 @@ $this->page = 'Обновить работу';
 
     </form>
     <a href="/job" class="btn btn-primary">Назад</a>
-</div>>
+</div>

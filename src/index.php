@@ -1,6 +1,4 @@
 <?php
-
-
 //ini_set('session.cookie_lifetime', 10);
 session_start();
 

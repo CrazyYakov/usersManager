@@ -3,56 +3,38 @@
 
 namespace core;
 
-use services\Validate;
 
 class Request
 {
 
+    use \traits\Helpers,
+        \traits\Singleton;
+
     public $post;
     public $get;
 
-    protected static Request $request;
 
-    public static function initialization() : Request
+    public function __construct()
     {
-        if (!empty(self::$request)) {
-            return self::$request;
-        }
-
-        self::$request = new self;
-        self::$request->get();
-        self::$request->post();
-        return self::$request;
+        $this->get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
+        $this->post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
     }
 
     public function get($key = '')
     {
         if (!empty($key)) {
-            if (is_array($_GET[$key])) {
-                $array = Validate::secure($_GET[$key]);
-                return filter_var_array($array, FILTER_SANITIZE_STRING);
-            }else{
-                return Validate::secure(filter_input(INPUT_GET, $key));
-            }
+            return $this->validateInputKey($key, $_GET, INPUT_GET, FILTER_SANITIZE_STRING);
         } else {
-            $this->get = filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
-            return filter_input_array(INPUT_GET, FILTER_SANITIZE_STRING);
+            return $this->get;
         }
     }
 
     public function post($key = '')
     {
         if (!empty($key)) {
-
-            if (is_array($_POST[$key])) {
-                $array = Validate::secure($_POST[$key]);
-                return filter_var_array($array, FILTER_SANITIZE_STRING);
-            }else{
-                return Validate::secure(filter_input(INPUT_POST, $key));
-            }
+            return $this->validateInputKey($key, $_POST, INPUT_POST, FILTER_SANITIZE_STRING);
         } else {
-            $this->post = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
-            return filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+            return $this->post;
         }
     }
 }

@@ -3,71 +3,56 @@
 namespace core;
 
 use Exception;
-use services\Session;
-use services\Validate;
 
 
 class Route
 {
+    use \traits\Helpers,
+        \traits\Singleton;
 
     protected string $controllerName = "controllers\\SiteController";
     protected string $actionName = 'actionIndex';
     protected string $url;
 
-    protected static Route $route;
     public ?Request $request;
     public ?Session $session;
 
-    public static function getRoute(Request $request = null, Session $session = null): Route
+    protected function __construct($params)
     {
-        if (!empty(self::$route)) {
-            return self::$route;
-        }
-
-        $route = new self;
-        $routes = Validate::getParseUrl(filter_var($_SERVER['REQUEST_URI']));
-        $route->setControllerAction($routes);
-        $route->request = $request;
-        $route->session = $session;
-
-        self::$route = $route;
-        return self::$route;
+        $routes = $this->getParseUrl(filter_var($_SERVER['REQUEST_URI']));
+        $this->setControllerAction($routes);
+        $this->request = $params[0]['request'] ?? null;
+        $this->session = $params[0]['session'] ?? null;
     }
 
     public function run()
     {
-
         try {
             if ($this->session->getSession() == null) {
-                $this->setControllerAction([1 => 'Auth', 2 => 'login']);
+                $this->setControllerAction(['controller' => 'Auth', 'action' => 'login']);
             }
 
             $controller = $this->controllerName;
             $action = $this->actionName;
-
             if (!class_exists($controller) || !method_exists($controller, $action)) {
-                throw new Exception();
+                throw new Exception("not Found 404");
             }
-
             (new $controller)->$action($this->request, $this->session);
+
         } catch (Exception $e) {
+            echo $e->getMessage();
             Route::errorPage404();
         }
     }
 
     protected function setControllerAction(array $routes)
     {
-        $controller_name = "";
         $route_path = $routes['path'] ?? $routes;
-        // получаем имя контроллера
-        if (!empty($route_path[1])) {
-            $controller_name = ucfirst($route_path[1]);
+
+        if (!empty($controller_name = ucfirst($route_path['controller']))) {
             $this->controllerName = "controllers\\{$controller_name}Controller";
         }
-        $action_name = "";
-        // получаем имя экшена
-        if (!empty($route_path[2])) {
-            $action_name = ucfirst($route_path[2]);
+        if (!empty($action_name = ucfirst($route_path['action']))) {
             $this->actionName = "action{$action_name}";
         } else {
             $route_query = $routes['query'];
@@ -79,6 +64,7 @@ class Route
 
         $url = strtolower("$controller_name/" . (!empty($action_name) ? $action_name : "index"));
         $this->setUrl($url);
+
     }
 
     protected function setUrl(string $url): void
