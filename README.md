@@ -1,1 +1,2 @@
-<h1> hello world</h1>
+<h1> User Manager </h1>
+docker-compose up

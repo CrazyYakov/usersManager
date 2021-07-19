@@ -17,7 +17,7 @@ class Autoloader
     }
 
     private function autoload($class)
-    {  //смотри в config.php если файл не найден
+    {
         try {
             $fileClass = preg_replace("/\\\/", '/', "{$class}.php");
             if (file_exists(__DIR__ . "/" . $fileClass)) {
