@@ -1,4 +1,4 @@
 <h1> User Manager </h1>
-docker-compose up
-login: root
-password: 1234
+<p>docker-compose up</p> 
+<p>login: root</p>
+<p>password: 1234</p>
